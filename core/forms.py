@@ -4,8 +4,8 @@ from django_countries.widgets import CountrySelectWidget
 
 
 PAYMENT_OPTION = (
-    ('CC', 'CreditCard'),
-    ('PP', 'PayPal')
+    ('S', 'Stripe'),
+    ('P', 'PayPal')
 )
 
 
@@ -27,3 +27,20 @@ class CheckoutForm(forms.Form):
     save_info = forms.BooleanField(required=False)
     payment_option = forms.ChoiceField(
         widget=forms.RadioSelect, choices=PAYMENT_OPTION)
+
+
+class CouponForm(forms.Form):
+    code = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Promo Code',
+        'aria-label': 'Recipient\'s username',
+        'aria-describedby': 'basic-addon2'
+    }))
+
+
+class RefundForm(forms.Form):
+    ref_code = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea(attrs={
+        'rows': 4
+    }))
+    email = forms.EmailField()
